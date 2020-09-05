@@ -18,6 +18,7 @@ const tracing = async (obj, call) => {
         optTolerance: obj.optTolerance === undefined ? 0.2 : obj.optTolerance
     };
     p = path.join(__dirname, `toVector`, `${obj.name}`)
+    console.log(params)
 
     potrace.trace(p, params, function (err, svg) {
         if (err) throw err;
@@ -29,17 +30,16 @@ const tracing = async (obj, call) => {
 
 }
 
-const posterize = (obj) => {
-    let params = {
-        color: obj.color != 'black' ? obj.color : 'black',
-        steps: obj.thresholds === undefined || obj.thresholds === [] ? [potrace.Potrace.THRESHOLD_AUTO] : obj.thresholds,
-        turdSize: obj.turdSize != 2 ? obj.turdSize : 2,
-        optTolerance: obj.optTolerance == 0.2 ? 0.2 : obj.optTolerance
-    };
+const posterize = (obj, call) => {
+    let threshold = obj.threshold === undefined ? potrace.Potrace.THRESHOLD_AUTO : parseFloat(obj.threshold)
+    let steps = obj.steps === undefined ? 2 : parseInt(obj.steps)
 
+    console.log('steps is ' + steps + ' and threshold is ' + threshold)
+    let params = {}
     p = path.join(__dirname, `toVector`, `${obj.name}`)
+    // console.log(params)
 
-    potrace.trace(p, params, function (err, svg) {
+    potrace.posterize(p, { threshold: threshold, steps: steps }, function (err, svg) {
         if (err) throw err;
 
         fs.writeFileSync(`./svgs/${obj.name}.svg`, svg);
@@ -66,20 +66,17 @@ function removeActiveImage(name, folder, extension) {
 
 app.get('/posterize', (req, res) => {
     let name = req.query.name
-    let thresholds = req.query.thresholds
-    let turdSize = req.query.turdSize
-    let optTolerance = req.query.optTolerance
-    let color = req.query.color
+    let threshold = req.query.threshold
+    let steps = req.query.steps
 
     posterize({
         name,
-        thresholds,
-        turdSize,
-        optTolerance,
-        color
-    }, res.sendFile(path.join(__dirname + 'toVector' + `${name}.svg`), (err) => {
-        console.log(err)
-    }))
+        threshold,
+        steps
+    }, () => {
+        res.sendFile(path.join(__dirname + '/svgs' + `/${name}.svg`))
+        callback(name, 900000, 'svgs', 'svg')
+    })
 
 })
 
