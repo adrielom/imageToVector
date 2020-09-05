@@ -5,6 +5,8 @@ let multer = require('multer')
 let upload = multer({ dest: './toVector' })
 
 const express = require('express')
+app.use(express.static('svgs'));
+app.use(express.static('toVector'));
 
 const PORT = process.env.PORT || 8080
 
