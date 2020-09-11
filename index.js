@@ -114,7 +114,7 @@ app.post('/imgToVector', upload.single('name'), (req, res) => {
     activeImage.originalName = file.originalname
     activeImage.extension = file.originalname.split('.')[1]
     activeImage.file = file
-    callback(activeImage.name, 900000, 'toVector')
+    callback(activeImage.name, 36000, 'toVector', activeImage.extension)
     res.send(activeImage)
 })
 
