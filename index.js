@@ -98,7 +98,7 @@ app.get('/tracing', async (req, res) => {
         color
     }, () => {
         res.sendFile(path.join(__dirname + '/svgs' + `/${name}.svg`))
-        callback(name, 900000, 'svgs', 'svg')
+        callback(name, 36000, 'svgs', 'svg')
     })
 
 })
