@@ -51,7 +51,7 @@ const posterize = (obj, call) => {
 }
 
 function removeActiveImage(name, folder, extension) {
-    let fPath = `${path.join(__dirname, folder, name)}.${extension}`
+    let fPath = extension != undefined ? `${path.join(__dirname, folder, name)}.${extension}` : path.join(__dirname, folder, name);
     console.log(fPath)
     fs.exists(fPath, (exists) => {
         if (exists) {
@@ -114,7 +114,7 @@ app.post('/imgToVector', upload.single('name'), (req, res) => {
     activeImage.originalName = file.originalname
     activeImage.extension = file.originalname.split('.')[1]
     activeImage.file = file
-    callback(activeImage.name, 36000, 'toVector', activeImage.extension)
+    callback(activeImage.name, 36000, 'toVector')
     res.send(activeImage)
 })
 
