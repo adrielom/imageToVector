@@ -19,8 +19,9 @@ const tracing = async (obj, call) => {
         turdSize: obj.turdSize === undefined ? 2 : obj.turdSize,
         optTolerance: obj.optTolerance === undefined ? 0.2 : obj.optTolerance
     };
+    console.log('got p')
     p = path.join(__dirname, `toVector`, `${obj.name}`)
-    console.log(params)
+    console.log('before trace')
 
     potrace.trace(p, params, function (err, svg) {
         if (err) throw err;
@@ -90,6 +91,7 @@ app.get('/tracing', async (req, res) => {
     let optTolerance = req.query.optTolerance
     let color = req.query.color
 
+    console.log('tracing')
     await tracing({
         name,
         threshold,
@@ -97,7 +99,9 @@ app.get('/tracing', async (req, res) => {
         optTolerance,
         color
     }, () => {
+        console.log('after tracing')
         res.sendFile(path.join(__dirname + '/svgs' + `/${name}.svg`))
+        console.log('before callback')
         callback(name, 60000, 'svgs', 'svg')
     })
 
