@@ -102,7 +102,7 @@ app.get('/tracing', async (req, res) => {
         console.log('after tracing')
         res.sendFile(path.join(__dirname + '/svgs' + `/${name}.svg`))
         console.log('before callback')
-        callback(name, 60000, 'svgs', 'svg')
+        callback(name, 900000, 'svgs', 'svg')
     })
 
 })
@@ -118,7 +118,7 @@ app.post('/imgToVector', upload.single('name'), (req, res) => {
     activeImage.originalName = file.originalname
     activeImage.extension = file.originalname.split('.')[1]
     activeImage.file = file
-    callback(activeImage.name, 60000, 'toVector')
+    callback(activeImage.name, 900000, 'toVector')
     res.send(activeImage)
 })
 
