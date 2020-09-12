@@ -116,7 +116,7 @@ app.post('/imgToVector', upload.single('name'), (req, res) => {
 
     let file = req.file
     let activeImage = {}
-
+    console.log('file is ' + req.file)
     activeImage.name = file.filename
     activeImage.originalName = file.originalname
     activeImage.extension = file.originalname.split('.')[1]
