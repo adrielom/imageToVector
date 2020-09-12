@@ -98,7 +98,7 @@ app.get('/tracing', async (req, res) => {
         color
     }, () => {
         res.sendFile(path.join(__dirname + '/svgs' + `/${name}.svg`))
-        callback(name, 36000, 'svgs', 'svg')
+        callback(name, 60000, 'svgs', 'svg')
     })
 
 })
@@ -114,7 +114,7 @@ app.post('/imgToVector', upload.single('name'), (req, res) => {
     activeImage.originalName = file.originalname
     activeImage.extension = file.originalname.split('.')[1]
     activeImage.file = file
-    callback(activeImage.name, 36000, 'toVector')
+    callback(activeImage.name, 60000, 'toVector')
     res.send(activeImage)
 })
 
