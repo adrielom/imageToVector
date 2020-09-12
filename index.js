@@ -3,12 +3,15 @@ let potrace = require('potrace'),
 path = require('path')
 let multer = require('multer')
 let upload = multer({ dest: './toVector' })
+let cors = require('cors')
 
 const express = require('express')
 
 const PORT = process.env.PORT || 8080
 
 const app = express()
+
+app.use(cors())
 app.use(express.static('svgs'));
 app.use(express.static('toVector'));
 
