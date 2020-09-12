@@ -21,7 +21,7 @@ const tracing = async (obj, call) => {
     };
     console.log('got p')
     p = path.join(__dirname, `toVector`, `${obj.name}`)
-    console.log('before trace')
+    console.log('before trace ' + p)
 
     potrace.trace(p, params, function (err, svg) {
         if (err) throw err;
